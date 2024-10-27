@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunrise Sunset</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #2980b9;
+            cursor: none;
+        }
+
+        .sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(to bottom, #f08080, #fffacd, #2980b9);
+            transition: background 1s ease;
+        }
+
+        .sun {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #ffcc00;
+            box-shadow: 0 0 50px #ffcc00;
+            transition: top 1s ease, box-shadow 1s ease;
+        }
+
+        .sun:hover {
+            top: 20%;
+            box-shadow: 0 0 100px #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="sky"></div>
+    <div class="sun"></div>
+
+    <script>
+        const sky = document.querySelector('.sky');
+        const sun = document.querySelector('.sun');
+
+        window.addEventListener('mousemove', (e) => {
+            const mouseY = e.clientY;
+            const maxTop = window.innerHeight - sun.offsetHeight;
+            const newTop = Math.max(0, Math.min(mouseY, maxTop));
+            sun.style.top = newTop + 'px';
+
+            const skyGradient = `linear-gradient(to bottom, 
+                hsl(${200 - newTop / maxTop * 100}, 50%, 50%), 
+                hsl(${300 - newTop / maxTop * 100}, 50%, 50%), 
+                hsl(${360 - newTop / maxTop * 100}, 50%, 50%))`;
+            sky.style.background = skyGradient;
+        });
+    </script>
+</body>
+</html>
